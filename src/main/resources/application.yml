@@ -1,0 +1,25 @@
+#nacos:
+#  config:
+#    bootstrap:
+#      enable: true
+#    server-addr: 47.102.207.104:8848
+#    # 主配置 data-id
+#    data-id: pi
+#    # 命名空间ID
+#    namespace: 77b54558-d244-4dbd-b541-12aaeab19e6f
+#    # 主配置 group-id
+#    group: DEFAULT_GROUP
+#    # 主配置 配置文件类型
+#    type: yaml
+#    # 主配置 最大重试次数
+#    max-retry: 10
+#    # 主配置 开启自动刷新
+#    auto-refresh: true
+#    # 主配置 重试时间
+#    config-retry-time: 2000
+#    # 主配置 配置监听长轮询超时时间
+#    config-long-poll-timeout: 20000
+#    # 主配置 开启注册监听器预加载配置服务（除非特殊业务需求，否则不推荐打开该参数）
+#    enable-remote-sync-config: false
+#    # 允许nacos上的配置优先于本地配置
+#    remote-first: true
