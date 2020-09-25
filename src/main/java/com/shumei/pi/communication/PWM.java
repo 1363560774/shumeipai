@@ -66,7 +66,7 @@ public class PWM {
         if (pulseWidth == null || pulseWidth > 1000) {
             return ExceptionEnum.PWM_PULSE_WIDTH_IS_TOO_LARGE.getMsg();
         }
-        if (pulse == null || pulse > 25) {
+        if (pulse == null || pulse > 25 || pulse < 5) {
             return ExceptionEnum.PWM_PULSE_COUNT_IS_TOO_LARGE.getMsg();
         }
         return PinEnum.PWM_SUCCESS.getMsg();
