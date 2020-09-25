@@ -2,6 +2,8 @@ package com.shumei.pi.communication;
 
 import com.pi4j.io.gpio.*;
 import com.pi4j.util.CommandArgumentParser;
+import com.shumei.pi.enums.ExceptionEnum;
+import com.shumei.pi.enums.PinEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,20 +101,20 @@ public class PWM {
     private String checkParameters(Integer range, Integer pulseWidth, Integer pulse,
                                    Integer velocity, Integer fineAdjustmentCompensation) {
         if (range == null || range > 3000) {
-            return "脉冲范围过大,不能超过3000";
+            return ExceptionEnum.PWM_PULSE_COUNT_IS_TOO_LARGE.getMsg();
         }
         if (pulseWidth == null || pulseWidth > 1000) {
-            return "脉冲宽度过大";
+            return ExceptionEnum.PWM_PULSE_WIDTH_IS_TOO_LARGE.getMsg();
         }
         if (pulse == null || pulse > range) {
-            return "脉冲数不得超过脉冲范围";
+            return ExceptionEnum.PWM_PULSE_COUNT_IS_TOO_LARGE.getMsg();
         }
         if (velocity == null || pulse/velocity < 10) {
-            return "脉冲速率不能过大,不能小于脉冲数的十倍";
+            return ExceptionEnum.PWM_PULSE_VELOCITY_IS_TOO_LARGE.getMsg();
         }
         if (fineAdjustmentCompensation == null || fineAdjustmentCompensation + range > 3000) {
-            return "脉冲范围过大,微调和范围相加不能超过3000";
+            return ExceptionEnum.PWM_PULSE_TUNING_WIDTH_IS_TOO_LARGE.getMsg();
         }
-        return "SUCCESS";
+        return PinEnum.PWM_SUCCESS.getMsg();
     }
 }
