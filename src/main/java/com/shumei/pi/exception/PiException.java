@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Getter
 public class PiException extends RuntimeException{
-    private int status;
+    private final int status;
 
     public PiException(ExceptionEnum e) {
         super(e.getMsg());
