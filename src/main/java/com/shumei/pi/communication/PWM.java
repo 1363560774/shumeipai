@@ -2,7 +2,6 @@ package com.shumei.pi.communication;
 
 import com.pi4j.io.gpio.*;
 import com.pi4j.util.CommandArgumentParser;
-import com.sun.tools.javac.util.Assert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,13 +36,15 @@ public class PWM {
      */
     @GetMapping("/testPWM")
     public ResponseEntity<Object> testPWM(@RequestParam("range") Integer range,
-                                          @RequestParam("PulseWidth") Integer pulseWidth,
+                                          @RequestParam("pulseWidth") Integer pulseWidth,
                                           @RequestParam("pulse") Integer pulse,
                                           @RequestParam("direction") Boolean direction,
                                           @RequestParam("velocity") Integer velocity,
                                           @RequestParam("fineAdjustmentCompensation") Integer fineAdjustmentCompensation) throws InterruptedException {
         String parametersCaveat = checkParameters(range, pulseWidth, pulse, velocity, fineAdjustmentCompensation);
-        Assert.check(parametersCaveat.equals(""), parametersCaveat);
+        if (parametersCaveat.equals("")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(parametersCaveat);
+        }
         final GpioController gpio = GpioFactory.getInstance();
         Pin pin = CommandArgumentParser.getPin(
                 RaspiPin.class,
