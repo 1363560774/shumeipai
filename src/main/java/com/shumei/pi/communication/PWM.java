@@ -42,7 +42,7 @@ public class PWM {
                                           @RequestParam("velocity") Integer velocity,
                                           @RequestParam("fineAdjustmentCompensation") Integer fineAdjustmentCompensation) throws InterruptedException {
         String parametersCaveat = checkParameters(range, pulseWidth, pulse, velocity, fineAdjustmentCompensation);
-        if (parametersCaveat.equals("")) {
+        if (!parametersCaveat.equals("SUCCESS")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(parametersCaveat);
         }
         final GpioController gpio = GpioFactory.getInstance();
@@ -113,6 +113,6 @@ public class PWM {
         if (fineAdjustmentCompensation == null || fineAdjustmentCompensation + range > 3000) {
             return "脉冲范围过大,微调和范围相加不能超过3000";
         }
-        return "";
+        return "SUCCESS";
     }
 }
