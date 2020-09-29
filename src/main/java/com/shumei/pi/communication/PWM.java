@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.shumei.pi.enums.Pin.getPin;
+
 /**
  * 注释
  *
@@ -34,8 +36,35 @@ public class PWM {
      * @return 消耗时长(毫秒)
      * @throws InterruptedException 线程睡眠异常
      */
-    @GetMapping("/testPWM")
-    public ResponseEntity<Object> testPWM(@RequestParam("range") Integer range,
+    @GetMapping("/test")
+    public ResponseEntity<Object> test(@RequestParam("range") Integer range,
+                                          @RequestParam("pulseWidth") Integer pulseWidth,
+                                          @RequestParam("pulse") Integer pulse,
+                                          @RequestParam("pin") Integer pin) throws InterruptedException {
+        String parametersCaveat = checkParameters(range, pulseWidth, pulse);
+        if (!parametersCaveat.equals("SUCCESS")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(parametersCaveat);
+        }
+        Pin p = getPin(pin);
+        final GpioController gpio = GpioFactory.getInstance();
+        Pin p1 = CommandArgumentParser.getPin(
+                RaspiPin.class,
+                p
+                );
+        GpioPinPwmOutput pwm = gpio.provisionSoftPwmOutputPin(p1);
+        pwm.setPwmRange(range);
+        long startTime = System.currentTimeMillis();
+        pwm.setPwm(pulse);
+        TimeUnit.MILLISECONDS.sleep(pulseWidth);
+        long ensTime = System.currentTimeMillis();
+        gpio.shutdown();
+        gpio.unprovisionPin(pwm);
+        log.info("消耗时长:{}毫秒", ensTime-startTime);
+        return ResponseEntity.status(HttpStatus.OK).body(ensTime-startTime);
+    }
+
+    @GetMapping("/pwm")
+    public ResponseEntity<Object> pwm(@RequestParam("range") Integer range,
                                           @RequestParam("pulseWidth") Integer pulseWidth,
                                           @RequestParam("pulse") Integer pulse) throws InterruptedException {
         String parametersCaveat = checkParameters(range, pulseWidth, pulse);
@@ -46,7 +75,7 @@ public class PWM {
         Pin pin = CommandArgumentParser.getPin(
                 RaspiPin.class,
                 RaspiPin.GPIO_12
-                );
+        );
         GpioPinPwmOutput pwm = gpio.provisionSoftPwmOutputPin(pin);
         pwm.setPwmRange(range);
         long startTime = System.currentTimeMillis();

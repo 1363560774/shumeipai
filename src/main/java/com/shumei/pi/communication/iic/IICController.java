@@ -1,4 +1,4 @@
-package com.shumei.pi.communication;
+package com.shumei.pi.communication.iic;
 
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
@@ -24,7 +24,7 @@ import java.util.Arrays;
  */
 @RestController
 @RequestMapping("I2C")
-public class Controller {
+public class IICController {
 
     // TSL2561 I2C address
     public static final int TSL2561_ADDR = 0x39; // address pin not connected (FLOATING)
