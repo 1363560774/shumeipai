@@ -12,6 +12,9 @@ public class Enumeration {
     public static final String IS_EDITOR = "editor";
 
 
+    public static final String SUCCESS = "SUCCESS";
+
+
     public static final String ARTICLE_CREATE_BY = "createBy";
     public static final String ARTICLE_TITLE = "title";
     public static final String USER_USERNAME = "userName";

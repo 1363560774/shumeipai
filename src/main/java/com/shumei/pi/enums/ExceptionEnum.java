@@ -21,6 +21,7 @@ public enum ExceptionEnum {
     PWM_PULSE_VELOCITY_IS_TOO_LARGE(400, "脉冲速率不能过大,不能小于脉冲数的十倍"),
     PWM_PULSE_TUNING_WIDTH_IS_TOO_LARGE(400, "脉冲范围过大,微调和范围相加不能超过3000"),
     PARAMETER_CAN_NOT_BE_NULL(400, "引脚参数错误"),
+    PWM_PIN_RANGE_IS_ERROR(500, "引脚编号必须是6或12"),
     ;
     private int status;
 
