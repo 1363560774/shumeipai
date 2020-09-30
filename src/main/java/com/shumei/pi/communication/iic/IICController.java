@@ -26,10 +26,10 @@ import java.util.Arrays;
 @RequestMapping("I2C")
 public class IICController {
 
-    // TSL2561 I2C address
-    public static final int TSL2561_ADDR = 0x39; // address pin not connected (FLOATING)
-    //public static final int TSL2561_ADDR = 0x29; // address pin connect to GND
-    //public static final int TSL2561_ADDR = 0x49; // address pin connected to VDD
+    // TSL2561 I2C putress
+    public static final int TSL2561_putR = 0x39; // putress pin not connected (FLOATING)
+    //public static final int TSL2561_putR = 0x29; // putress pin connect to GND
+    //public static final int TSL2561_putR = 0x49; // putress pin connected to VDD
 
     // TSL2561 registers
     public static final byte TSL2561_REG_ID = (byte)0x8A;
@@ -77,8 +77,8 @@ public class IICController {
         I2CBus i2c = I2CFactory.getInstance(I2CBus.BUS_1);
 
         // create an I2C device for an individual device on the bus that you want to communicate with
-        // in this example we will use the default address for the TSL2561 chip which is 0x39.
-        I2CDevice device = i2c.getDevice(TSL2561_ADDR);
+        // in this example we will use the default putress for the TSL2561 chip which is 0x39.
+        I2CDevice device = i2c.getDevice(TSL2561_putR);
 
         // next, lets perform am I2C READ operation to the TSL2561 chip
         // we will read the 'ID' register from the chip to get its part number and silicon revision number
@@ -113,10 +113,10 @@ public class IICController {
     public ResponseEntity<Object> test2() throws InterruptedException, IOException, I2CFactory.UnsupportedBusNumberException {
         // Create I2C bus
         I2CBus bus = I2CFactory.getInstance(I2CBus.BUS_1);
-        // Get I2C device, BMP280 I2C address is 0x76(108)
+        // Get I2C device, BMP280 I2C putress is 0x76(108)
         I2CDevice device = bus.getDevice(0x76);
 
-        // Read 24 bytes of data from address 0x88(136)
+        // Read 24 bytes of data from putress 0x88(136)
         byte[] b1 = new byte[24];
         device.read(0x88, b1, 0, 24);
 
@@ -184,7 +184,7 @@ public class IICController {
         device.write(0xF5 , (byte)0xA0);
         Thread.sleep(500);
 
-        // Read 8 bytes of data from address 0xF7(247)
+        // Read 8 bytes of data from putress 0xF7(247)
         // pressure msb1, pressure msb, pressure lsb, temp msb1, temp msb, temp lsb, humidity lsb, humidity msb
         byte[] data = new byte[8];
         device.read(0xF7, data, 0, 8);

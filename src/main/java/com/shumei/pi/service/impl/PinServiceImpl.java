@@ -43,8 +43,8 @@ public class PinServiceImpl implements PinService {
         pwm.setPwm(pulse);
         TimeUnit.MILLISECONDS.sleep(pulseWidth);
         long ensTime = System.currentTimeMillis();
-        gpio.shutdown();
         gpio.unprovisionPin(pwm);
+        gpio.shutdown();
         log.info("消耗时长:{}毫秒", ensTime-startTime);
         return ResponseEntity.status(HttpStatus.OK).body(ensTime-startTime);
     }
