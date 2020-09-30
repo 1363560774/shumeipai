@@ -31,13 +31,13 @@ public class PinServiceImpl implements PinService {
         if (!parametersCaveat.equals(Enumeration.SUCCESS)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(parametersCaveat);
         }
-        Pin p = getPin(pin);
+        Pin getPin = getPin(pin);
         final GpioController gpio = GpioFactory.getInstance();
-        Pin p1 = CommandArgumentParser.getPin(
+        Pin p = CommandArgumentParser.getPin(
                 RaspiPin.class,
-                p
+                getPin
         );
-        GpioPinPwmOutput pwm = gpio.provisionSoftPwmOutputPin(p1);
+        GpioPinPwmOutput pwm = gpio.provisionSoftPwmOutputPin(p);
         pwm.setPwmRange(range);
         long startTime = System.currentTimeMillis();
         pwm.setPwm(pulse);

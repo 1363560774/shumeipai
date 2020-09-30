@@ -36,7 +36,7 @@ public class PWM {
      * @throws InterruptedException 线程睡眠异常
      */
     @GetMapping("/setPWMParameters")
-    public ResponseEntity<Object> test(@RequestParam(value = "range", defaultValue = "600") Integer range,
+    public ResponseEntity<Object> setPWMParameters(@RequestParam(value = "range", defaultValue = "600") Integer range,
                                      @RequestParam(value = "pulseWidth", defaultValue = "100") Integer pulseWidth,
                                      @RequestParam(value = "pulse", defaultValue = "15") Integer pulse,
                                      @RequestParam(value = "pin", defaultValue = "6") Integer pin) throws InterruptedException {
